@@ -2,6 +2,8 @@
 @using ClientDependency.Core.Mvc
 @{
 	Layout = null;
+	
+	var homePage = Model.AncestorOrSelf<Home>();
 }
 
 <html>
@@ -14,6 +16,8 @@
          });
          
          Html.RequiresCss("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css");
+         
+         Html.RequiresCss("/css/CookieConsent.css");
          
          Html.RequiresJs("https://code.jquery.com/jquery-3.2.1.slim.min.js", new {
            integrity = "sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN",
@@ -31,6 +35,8 @@
            integrity = "sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl",
            crossorigin = "anonymous"
          });
+         
+         Html.RequiresJs("/scripts/CookieConsent.js");
         }
         
         @Html.RenderCssHere()
@@ -38,7 +44,27 @@
 
     </head>
     <body>
+       
+        @Html.Partial("NavBar")
+        
         @RenderBody()
+        
+        @Html.Partial("Footer")
+        
+        <!--Cookie Consent -->
+        <div class="alert alert-dismissible text-center cookiealert" role="alert">
+          <div class="cookiealert-container">
+            <b>Do you like cookies?</b> &#x1F36A; We use cookies to ensure you get the best experience on our website. <a href="http://cookiesandyou.com/" target="_blank">Learn more</a>
+        
+            <button type="button" class="btn btn-primary btn-sm acceptcookies" aria-label="Close">
+                I agree
+            </button>
+        </div>
+</div>
+
+        
         @Html.RenderJsHere()
+        
+
     </body>
 </html>
