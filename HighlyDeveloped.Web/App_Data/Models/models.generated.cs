@@ -17,8 +17,8 @@ using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Web;
 using Umbraco.ModelsBuilder.Embedded;
 
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "cefa9ef1c6e92499")]
-[assembly:System.Reflection.AssemblyVersion("0.0.0.2")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "cfc3c73f3a274a49")]
+[assembly:System.Reflection.AssemblyVersion("0.0.0.1")]
 
 namespace Umbraco.Web.PublishedModels
 {
@@ -269,6 +269,53 @@ namespace Umbraco.Web.PublishedModels
 		/// <summary>Static getter for Call To Action Title</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
 		public static string GetCallToActionTitle(ICallToAction that) => that.Value<string>("callToActionTitle");
+	}
+
+	/// <summary>News Article</summary>
+	[PublishedModel("newsArticle")]
+	public partial class NewsArticle : PublishedContentModel
+	{
+		// helpers
+#pragma warning disable 0109 // new is redundant
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public new const string ModelTypeAlias = "newsArticle";
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public new static IPublishedContentType GetModelContentType()
+			=> PublishedModelUtility.GetModelContentType(ModelItemType, ModelTypeAlias);
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public static IPublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<NewsArticle, TValue>> selector)
+			=> PublishedModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+#pragma warning restore 0109
+
+		// ctor
+		public NewsArticle(IPublishedContent content)
+			: base(content)
+		{ }
+
+		// properties
+
+		///<summary>
+		/// Author: The article author
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("author")]
+		public virtual string Author => this.Value<string>("author");
+
+		///<summary>
+		/// Lead In: A sentence on what the article is about
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("leadIn")]
+		public virtual string LeadIn => this.Value<string>("leadIn");
+
+		///<summary>
+		/// Post Date: When the article was published
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("postDate")]
+		public virtual global::System.DateTime PostDate => this.Value<global::System.DateTime>("postDate");
 	}
 
 	/// <summary>Folder</summary>
