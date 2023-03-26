@@ -6,8 +6,8 @@ using  Umbraco.Core.Models;
 using  Umbraco.Core.Models.PublishedContent;
 using  Umbraco.Web;
 using  Umbraco.ModelsBuilder.Embedded;
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "2b836a075d3f38ac")]
-[assembly:System.Reflection.AssemblyVersion("0.0.0.1")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "cefa9ef1c6e92499")]
+[assembly:System.Reflection.AssemblyVersion("0.0.0.2")]
 
 
 // FILE: models.generated.cs
@@ -38,7 +38,7 @@ namespace Umbraco.Web.PublishedModels
 {
 	/// <summary>Home</summary>
 	[PublishedModel("home")]
-	public partial class Home : PublishedContentModel, IPageContent
+	public partial class Home : PublishedContentModel, ICallToAction, IPageContent
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
@@ -60,6 +60,27 @@ namespace Umbraco.Web.PublishedModels
 		{ }
 
 		// properties
+
+		///<summary>
+		/// Call To Action Link: Link to something or somewhere
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("callToActionLink")]
+		public virtual global::Umbraco.Web.Models.Link CallToActionLink => global::Umbraco.Web.PublishedModels.CallToAction.GetCallToActionLink(this);
+
+		///<summary>
+		/// Call To Action Text: Some explanatory text
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("callToActionText")]
+		public virtual string CallToActionText => global::Umbraco.Web.PublishedModels.CallToAction.GetCallToActionText(this);
+
+		///<summary>
+		/// Call To Action Title: This will be title text
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("callToActionTitle")]
+		public virtual string CallToActionTitle => global::Umbraco.Web.PublishedModels.CallToAction.GetCallToActionTitle(this);
 
 		///<summary>
 		/// Page Content Text: This will be the text message displayed on the screen
@@ -186,6 +207,82 @@ namespace Umbraco.Web.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
 		[ImplementPropertyType("testMode")]
 		public virtual bool TestMode => this.Value<bool>("testMode");
+	}
+
+	// Mixin Content Type with alias "callToAction"
+	/// <summary>Call to Action</summary>
+	public partial interface ICallToAction : IPublishedContent
+	{
+		/// <summary>Call To Action Link</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		global::Umbraco.Web.Models.Link CallToActionLink { get; }
+
+		/// <summary>Call To Action Text</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		string CallToActionText { get; }
+
+		/// <summary>Call To Action Title</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		string CallToActionTitle { get; }
+	}
+
+	/// <summary>Call to Action</summary>
+	[PublishedModel("callToAction")]
+	public partial class CallToAction : PublishedContentModel, ICallToAction
+	{
+		// helpers
+#pragma warning disable 0109 // new is redundant
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public new const string ModelTypeAlias = "callToAction";
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public new static IPublishedContentType GetModelContentType()
+			=> PublishedModelUtility.GetModelContentType(ModelItemType, ModelTypeAlias);
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public static IPublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<CallToAction, TValue>> selector)
+			=> PublishedModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+#pragma warning restore 0109
+
+		// ctor
+		public CallToAction(IPublishedContent content)
+			: base(content)
+		{ }
+
+		// properties
+
+		///<summary>
+		/// Call To Action Link: Link to something or somewhere
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("callToActionLink")]
+		public virtual global::Umbraco.Web.Models.Link CallToActionLink => GetCallToActionLink(this);
+
+		/// <summary>Static getter for Call To Action Link</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public static global::Umbraco.Web.Models.Link GetCallToActionLink(ICallToAction that) => that.Value<global::Umbraco.Web.Models.Link>("callToActionLink");
+
+		///<summary>
+		/// Call To Action Text: Some explanatory text
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("callToActionText")]
+		public virtual string CallToActionText => GetCallToActionText(this);
+
+		/// <summary>Static getter for Call To Action Text</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public static string GetCallToActionText(ICallToAction that) => that.Value<string>("callToActionText");
+
+		///<summary>
+		/// Call To Action Title: This will be title text
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("callToActionTitle")]
+		public virtual string CallToActionTitle => GetCallToActionTitle(this);
+
+		/// <summary>Static getter for Call To Action Title</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public static string GetCallToActionTitle(ICallToAction that) => that.Value<string>("callToActionTitle");
 	}
 
 	/// <summary>Folder</summary>
