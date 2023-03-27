@@ -22,6 +22,7 @@
     <div class="row">
         <div class="col">
             <!--Latest Tweets -->
+            @Html.Action("GetTweets","Twitter",new { twitterHandle = "HDeveloped" })
             @Umbraco.RenderMacro("GetLatestTweets", new {twitterHandle="HDeveloped"})
         </div>
     </div>

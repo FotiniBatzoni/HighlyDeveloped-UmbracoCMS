@@ -6,7 +6,7 @@ using  Umbraco.Core.Models;
 using  Umbraco.Core.Models.PublishedContent;
 using  Umbraco.Web;
 using  Umbraco.ModelsBuilder.Embedded;
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "f223bada9e17f653")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "6d47464f45476cae")]
 [assembly:System.Reflection.AssemblyVersion("0.0.0.1")]
 
 
@@ -207,6 +207,34 @@ namespace Umbraco.Web.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
 		[ImplementPropertyType("testMode")]
 		public virtual bool TestMode => this.Value<bool>("testMode");
+
+		///<summary>
+		/// Twitter Access Token: This is the access token for the twitter API
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("twitterAccessToken")]
+		public virtual string TwitterAccessToken => this.Value<string>("twitterAccessToken");
+
+		///<summary>
+		/// Twitter Access Token Secret: This is the private key for the access
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("twitterAccessTokenSecret")]
+		public virtual string TwitterAccessTokenSecret => this.Value<string>("twitterAccessTokenSecret");
+
+		///<summary>
+		/// Twitter Consumer API Key: This is the consumer API key
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("twitterConsumerAPIKey")]
+		public virtual string TwitterConsumerApikey => this.Value<string>("twitterConsumerAPIKey");
+
+		///<summary>
+		/// Twitter Consumer Secret API Key: This is the secret consumer key
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("twitterConsumerSecretAPIKey")]
+		public virtual string TwitterConsumerSecretApikey => this.Value<string>("twitterConsumerSecretAPIKey");
 	}
 
 	// Mixin Content Type with alias "callToAction"
