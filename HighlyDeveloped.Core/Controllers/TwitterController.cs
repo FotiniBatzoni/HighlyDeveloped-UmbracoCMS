@@ -40,7 +40,7 @@ namespace HighlyDeveloped.Core.Controllers
 
             //Return the view
 
-            return PartialView(PARTIAL_VIEW_FOLDER + "/Latest Tweets.cshtml", twitterHandle);
+            return PartialView(PARTIAL_VIEW_FOLDER + "/Latest Tweets.cshtml", vm);
         }
 
         /// <summary>

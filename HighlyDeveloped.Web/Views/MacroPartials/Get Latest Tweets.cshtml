@@ -2,5 +2,8 @@
 @{
     var twitterHandle = Model.MacroParameters["twitterHandle"] as string;
 }
-<a class="twitter-timeline" href="https://twitter.com/@twitterHandle?ref_src=twsrc%5Etfw">Tweets by @twitterHandle</a> 
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+<!--<a class="twitter-timeline" href="https://twitter.com/@twitterHandle?ref_src=twsrc%5etfw">tweets by @twitterHandle</a> -->
+<!--<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
+
+
+@*@Html.Action("GetTweets","Twitter", new {twitterHandle = twitterHandle})*@
