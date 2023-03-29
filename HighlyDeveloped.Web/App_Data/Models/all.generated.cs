@@ -6,8 +6,8 @@ using  Umbraco.Core.Models;
 using  Umbraco.Core.Models.PublishedContent;
 using  Umbraco.Web;
 using  Umbraco.ModelsBuilder.Embedded;
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "390f3a3a117bd80e")]
-[assembly:System.Reflection.AssemblyVersion("0.0.0.2")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "97047ff0483baae7")]
+[assembly:System.Reflection.AssemblyVersion("0.0.0.6")]
 
 
 // FILE: models.generated.cs
@@ -376,7 +376,7 @@ namespace Umbraco.Web.PublishedModels
 
 	/// <summary>Content Page</summary>
 	[PublishedModel("contentPage")]
-	public partial class ContentPage : PublishedContentModel, IHero
+	public partial class ContentPage : PublishedContentModel, IHero, INavigation
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
@@ -440,6 +440,13 @@ namespace Umbraco.Web.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
 		[ImplementPropertyType("heroTitle")]
 		public virtual string HeroTitle => global::Umbraco.Web.PublishedModels.Hero.GetHeroTitle(this);
+
+		///<summary>
+		/// Umbraco Navi Hide: If this checked the page won't appear in the menu
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("umbracoNaviHide")]
+		public virtual bool UmbracoNaviHide => global::Umbraco.Web.PublishedModels.Navigation.GetUmbracoNaviHide(this);
 	}
 
 	// Mixin Content Type with alias "hero"
@@ -531,6 +538,52 @@ namespace Umbraco.Web.PublishedModels
 		/// <summary>Static getter for Hero Title</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
 		public static string GetHeroTitle(IHero that) => that.Value<string>("heroTitle");
+	}
+
+	// Mixin Content Type with alias "navigation"
+	/// <summary>Navigation</summary>
+	public partial interface INavigation : IPublishedContent
+	{
+		/// <summary>Umbraco Navi Hide</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		bool UmbracoNaviHide { get; }
+	}
+
+	/// <summary>Navigation</summary>
+	[PublishedModel("navigation")]
+	public partial class Navigation : PublishedContentModel, INavigation
+	{
+		// helpers
+#pragma warning disable 0109 // new is redundant
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public new const string ModelTypeAlias = "navigation";
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public new static IPublishedContentType GetModelContentType()
+			=> PublishedModelUtility.GetModelContentType(ModelItemType, ModelTypeAlias);
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public static IPublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<Navigation, TValue>> selector)
+			=> PublishedModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+#pragma warning restore 0109
+
+		// ctor
+		public Navigation(IPublishedContent content)
+			: base(content)
+		{ }
+
+		// properties
+
+		///<summary>
+		/// Umbraco Navi Hide: If this checked the page won't appear in the menu
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("umbracoNaviHide")]
+		public virtual bool UmbracoNaviHide => GetUmbracoNaviHide(this);
+
+		/// <summary>Static getter for Umbraco Navi Hide</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public static bool GetUmbracoNaviHide(INavigation that) => that.Value<bool>("umbracoNaviHide");
 	}
 
 	/// <summary>Folder</summary>
