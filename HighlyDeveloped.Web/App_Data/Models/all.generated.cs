@@ -6,8 +6,8 @@ using  Umbraco.Core.Models;
 using  Umbraco.Core.Models.PublishedContent;
 using  Umbraco.Web;
 using  Umbraco.ModelsBuilder.Embedded;
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "e618f7874b292748")]
-[assembly:System.Reflection.AssemblyVersion("0.0.0.3")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "390f3a3a117bd80e")]
+[assembly:System.Reflection.AssemblyVersion("0.0.0.2")]
 
 
 // FILE: models.generated.cs
@@ -398,6 +398,13 @@ namespace Umbraco.Web.PublishedModels
 		{ }
 
 		// properties
+
+		///<summary>
+		/// Content Grid: This is the umbraco grid for content layout
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("contentGrid")]
+		public virtual global::Newtonsoft.Json.Linq.JToken ContentGrid => this.Value<global::Newtonsoft.Json.Linq.JToken>("contentGrid");
 
 		///<summary>
 		/// Page Content: This is the page contnet
