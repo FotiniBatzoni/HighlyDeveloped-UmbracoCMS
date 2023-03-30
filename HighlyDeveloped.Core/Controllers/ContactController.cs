@@ -30,6 +30,14 @@ namespace HighlyDeveloped.Core.Controllers
             if(!ModelState.IsValid)
             {
                 ModelState.AddModelError("Error", "Please check the form");
+
+                //Set the recaptcha site key
+                var siteSettings = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("siteSettings").FirstOrDefault();
+                if(siteSettings != null)
+                {
+                    var siteKey = siteSettings.Value<string>("recaptchaSiteKey");
+                    vm.RecaptchaSiteKey = siteKey;
+                }
                 return CurrentUmbracoPage();
             }
 

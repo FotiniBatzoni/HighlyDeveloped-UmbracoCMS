@@ -6,8 +6,8 @@ using  Umbraco.Core.Models;
 using  Umbraco.Core.Models.PublishedContent;
 using  Umbraco.Web;
 using  Umbraco.ModelsBuilder.Embedded;
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "b38ae122471582a2")]
-[assembly:System.Reflection.AssemblyVersion("0.0.0.1")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "9de2bdc6c61fd373")]
+[assembly:System.Reflection.AssemblyVersion("0.0.0.2")]
 
 
 // FILE: models.generated.cs
@@ -174,6 +174,20 @@ namespace Umbraco.Web.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
 		[ImplementPropertyType("emailSettingsFromAddress")]
 		public virtual string EmailSettingsFromAddress => this.Value<string>("emailSettingsFromAddress");
+
+		///<summary>
+		/// Recaptcha Secret Key: This is the private key for recaptcha
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("recaptchaSecretKey")]
+		public virtual string RecaptchaSecretKey => this.Value<string>("recaptchaSecretKey");
+
+		///<summary>
+		/// Recaptcha Site Key: This is the site you get from google to recaptcha
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("recaptchaSiteKey")]
+		public virtual string RecaptchaSiteKey => this.Value<string>("recaptchaSiteKey");
 
 		///<summary>
 		/// Site Name: The name of the website for display purposes

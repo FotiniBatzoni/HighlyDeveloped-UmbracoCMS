@@ -7,6 +7,18 @@
     Html.EnableUnobtrusiveJavaScript();
 }
 
+
+<script src="https://www.google.com/recaptcha/api.js?render=@Model.RecaptchaSiteKey"></script>
+<script>
+    grecaptcha.ready(function () {
+        grecaptcha.execute('@Model.RecaptchaSiteKey',
+            { action: 'contact_us' })
+            .then(function (token) {
+                $('#GoogleCaptchaToken').val(token)
+            })
+    })
+</script>
+
 @if ((string)TempData["status"] == "OK")
 {
     @* show ok message*@
@@ -67,6 +79,9 @@
                 @Html.TextAreaFor(m => m.Comment, new { @class = "from-control form-control-lg", placeholder = "Your Comment", maxlength = "500" })
             </div>
         </div>
+
+        <!--Put the rest of form elements-->
+        <input type="hidden" name="GoogleCaptchaToken" id="GoogleCaptchaToken" />
 
         <div class="form-group">
             <button class="btn btn-outline-primary btn-lg" type="submit">Send</button>
