@@ -9,6 +9,8 @@ using Umbraco.Web;
 using Umbraco.Web.Mvc;
 using Umbraco.Core.Logging;
 using System.Net.Mail;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
 
 namespace HighlyDeveloped.Core.Controllers
 {
@@ -20,6 +22,15 @@ namespace HighlyDeveloped.Core.Controllers
         public ActionResult RenderContactForm()
         {
             var vm = new ContactFormViewModel();
+
+            //Set the recaptcha site key
+            var siteSettings = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("siteSettings").FirstOrDefault();
+            if (siteSettings != null)
+            {
+                var siteKey = siteSettings.Value<string>("recaptchaSiteKey");
+                vm.RecaptchaSiteKey = siteKey;
+            }
+
             return PartialView("~/Views/Partials/Contact Form.cshtml", vm);
         }
 
@@ -27,19 +38,27 @@ namespace HighlyDeveloped.Core.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult HandleContactForm(ContactFormViewModel vm)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("Error", "Please check the form");
-
-                //Set the recaptcha site key
-                var siteSettings = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("siteSettings").FirstOrDefault();
-                if(siteSettings != null)
-                {
-                    var siteKey = siteSettings.Value<string>("recaptchaSiteKey");
-                    vm.RecaptchaSiteKey = siteKey;
-                }
                 return CurrentUmbracoPage();
             }
+
+            //Set the recaptcha site key
+            var siteSettings = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("siteSettings").FirstOrDefault();
+            if (siteSettings != null)
+            {
+                var secretKey = siteSettings.Value<string>("recaptchaSecretKey");
+                vm.RecaptchaSiteKey = secretKey;
+
+                var isCaptchaValid = IsCaptchaValid(Request.Form["GoogleCaptchaToken"], secretKey);
+                if (!isCaptchaValid)
+                {
+                    ModelState.AddModelError("Captcha", "The captcha is not valid. Are you human?");
+                    return CurrentUmbracoPage();
+                }
+            }
+
 
             try
             {
@@ -74,6 +93,39 @@ namespace HighlyDeveloped.Core.Controllers
             }
 
             return CurrentUmbracoPage();
+        }
+
+        /// <summary>
+        /// Perform a captcha validity check
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="secretKey"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        private bool IsCaptchaValid(string token, string secretKey)
+        {
+            //Sending the token to Google API
+            HttpClient httpClient = new HttpClient();
+            var res = httpClient
+                .GetAsync($"https://www.google.com/recaptcha/api/siteverify?secret={secretKey}&response={token}")
+                .Result;
+
+            if(res.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                return false;
+            }
+
+            //Get Response
+            string jsonRes = res.Content.ReadAsStringAsync().Result;
+            dynamic jsonData = JObject.Parse(jsonRes);
+
+            if (jsonData.success != true)
+            {
+                return false;
+            }
+
+            //was good?
+            return true;
         }
 
         /// <summary>

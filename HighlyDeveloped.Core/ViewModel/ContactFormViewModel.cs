@@ -26,6 +26,6 @@ namespace HighlyDeveloped.Core.ViewModel
 
         public string RecaptchaSiteKey { get; set; }
 
-
+        public string RecaptchaSecretKey { get; set; }
     }
 }
