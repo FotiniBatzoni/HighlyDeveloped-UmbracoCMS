@@ -2,6 +2,12 @@
 @model HighlyDeveloped.Core.ViewModel.ContactFormViewModel
 @using HighlyDeveloped.Core.Controllers
 
+@{ 
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
+}
+
+
 @using (Html.BeginUmbracoForm<ContactController>("HandleContactForm"))
 {
     @Html.ValidationSummary()
