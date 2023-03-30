@@ -1,0 +1,49 @@
+﻿
+@model HighlyDeveloped.Core.ViewModel.ContactFormViewModel
+@using HighlyDeveloped.Core.Controllers
+
+@using (Html.BeginUmbracoForm<ContactController>("HandleContactForm"))
+{
+    @Html.ValidationSummary()
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label for="your-name-textbox">Your Name *</label>
+        <div>
+            <span class="field-validation-valid" data-valmsg-for="Name" data-valmsg-replace="true"></span>
+            @Html.TextBoxFor(m => m.Name, new { @class = "from-control form-control-lg", placeholder = "Your Name", maxlength = "80" })
+        </div>
+
+    </div>
+
+    <!--Email-->
+    <div class="form-group">
+        <label for="your-email-textbox">Email *</label>
+        <div>
+            <span class="field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+            @Html.TextBoxFor(m => m.EmailAddress, new { @class = "from-control form-control-lg", placeholder = "Your Email Address", maxlength = "255" })
+        </div>
+    </div>
+
+    <!--Subject-->
+    <div class="form-group">
+        <label for="your-subject-textbox">Subject of enquiry *</label>
+        <div>
+            <span class="field-validation-valid"></span>
+            @Html.TextBoxFor(m => m.Subject, new { @class = "from-control form-control-lg", placeholder = "Subject of enquiry", maxlength = "255" })
+        </div>
+    </div>
+
+    <!--Comment-->
+    <div class="form-group">
+        <label for="your-comment-textbox">Comments</label>
+        <div>
+            <span class="field-validation-valid"></span>
+            @Html.TextAreaFor(m => m.Comment, new { @class = "from-control form-control-lg", placeholder = "Your Comment", maxlength = "500" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button class="btn btn-outline-primary btn-lg" type="submit">Send</button>
+    </div>
+}
