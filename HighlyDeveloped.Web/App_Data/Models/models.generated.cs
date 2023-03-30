@@ -17,7 +17,7 @@ using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Web;
 using Umbraco.ModelsBuilder.Embedded;
 
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "b9836efe68dc0944")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "b38ae122471582a2")]
 [assembly:System.Reflection.AssemblyVersion("0.0.0.2")]
 
 namespace Umbraco.Web.PublishedModels
@@ -146,6 +146,20 @@ namespace Umbraco.Web.PublishedModels
 		{ }
 
 		// properties
+
+		///<summary>
+		/// Email Settings Admin Accounts: A comma delimited list of email accounts to send notifications to
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("emailSettingsAdminAccounts")]
+		public virtual string EmailSettingsAdminAccounts => this.Value<string>("emailSettingsAdminAccounts");
+
+		///<summary>
+		/// Email Settings From Address: This is the email it will appear to be from
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("emailSettingsFromAddress")]
+		public virtual string EmailSettingsFromAddress => this.Value<string>("emailSettingsFromAddress");
 
 		///<summary>
 		/// Site Name: The name of the website for display purposes
