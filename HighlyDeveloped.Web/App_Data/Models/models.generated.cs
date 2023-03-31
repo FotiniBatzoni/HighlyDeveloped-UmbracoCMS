@@ -17,8 +17,8 @@ using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Web;
 using Umbraco.ModelsBuilder.Embedded;
 
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "24da7a56a68d3421")]
-[assembly:System.Reflection.AssemblyVersion("0.0.0.2")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "18f683df26461cb3")]
+[assembly:System.Reflection.AssemblyVersion("0.0.0.4")]
 
 namespace Umbraco.Web.PublishedModels
 {
@@ -220,7 +220,7 @@ namespace Umbraco.Web.PublishedModels
 
 	// Mixin Content Type with alias "callToAction"
 	/// <summary>Call to Action</summary>
-	public partial interface ICallToAction : IPublishedContent
+	public partial interface ICallToAction : IPublishedElement
 	{
 		/// <summary>Call To Action Link</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
@@ -237,7 +237,7 @@ namespace Umbraco.Web.PublishedModels
 
 	/// <summary>Call to Action</summary>
 	[PublishedModel("callToAction")]
-	public partial class CallToAction : PublishedContentModel, ICallToAction
+	public partial class CallToAction : PublishedElementModel, ICallToAction
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
@@ -254,7 +254,7 @@ namespace Umbraco.Web.PublishedModels
 #pragma warning restore 0109
 
 		// ctor
-		public CallToAction(IPublishedContent content)
+		public CallToAction(IPublishedElement content)
 			: base(content)
 		{ }
 
@@ -390,7 +390,7 @@ namespace Umbraco.Web.PublishedModels
 
 	/// <summary>Content Page</summary>
 	[PublishedModel("contentPage")]
-	public partial class ContentPage : PublishedContentModel, IHero, INavigation
+	public partial class ContentPage : PublishedContentModel, IEr, IHero, INavigation
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
@@ -753,9 +753,15 @@ namespace Umbraco.Web.PublishedModels
 		public virtual global::Umbraco.Web.Models.Link LinkUrl => this.Value<global::Umbraco.Web.Models.Link>("linkUrl");
 	}
 
+	// Mixin Content Type with alias "er"
+	/// <summary>Useful Links</summary>
+	public partial interface IEr : IPublishedContent
+	{
+	}
+
 	/// <summary>Useful Links</summary>
 	[PublishedModel("er")]
-	public partial class Er : PublishedContentModel
+	public partial class Er : PublishedContentModel, IEr
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
