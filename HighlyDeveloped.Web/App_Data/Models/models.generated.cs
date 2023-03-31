@@ -17,7 +17,7 @@ using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Web;
 using Umbraco.ModelsBuilder.Embedded;
 
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "9de2bdc6c61fd373")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "24da7a56a68d3421")]
 [assembly:System.Reflection.AssemblyVersion("0.0.0.2")]
 
 namespace Umbraco.Web.PublishedModels
@@ -700,6 +700,79 @@ namespace Umbraco.Web.PublishedModels
 
 		// ctor
 		public Data(IPublishedContent content)
+			: base(content)
+		{ }
+
+		// properties
+	}
+
+	/// <summary>Useful Link</summary>
+	[PublishedModel("usefulLink")]
+	public partial class UsefulLink : PublishedElementModel
+	{
+		// helpers
+#pragma warning disable 0109 // new is redundant
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public new const string ModelTypeAlias = "usefulLink";
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public new static IPublishedContentType GetModelContentType()
+			=> PublishedModelUtility.GetModelContentType(ModelItemType, ModelTypeAlias);
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public static IPublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<UsefulLink, TValue>> selector)
+			=> PublishedModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+#pragma warning restore 0109
+
+		// ctor
+		public UsefulLink(IPublishedElement content)
+			: base(content)
+		{ }
+
+		// properties
+
+		///<summary>
+		/// Link Icon: The font awesome class name
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("linkIcon")]
+		public virtual string LinkIcon => this.Value<string>("linkIcon");
+
+		///<summary>
+		/// Link Text: The text for the link
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("linkText")]
+		public virtual string LinkText => this.Value<string>("linkText");
+
+		///<summary>
+		/// Link Url: The actual link of url
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		[ImplementPropertyType("linkUrl")]
+		public virtual global::Umbraco.Web.Models.Link LinkUrl => this.Value<global::Umbraco.Web.Models.Link>("linkUrl");
+	}
+
+	/// <summary>Useful Links</summary>
+	[PublishedModel("er")]
+	public partial class Er : PublishedContentModel
+	{
+		// helpers
+#pragma warning disable 0109 // new is redundant
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public new const string ModelTypeAlias = "er";
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public new static IPublishedContentType GetModelContentType()
+			=> PublishedModelUtility.GetModelContentType(ModelItemType, ModelTypeAlias);
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.6")]
+		public static IPublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<Er, TValue>> selector)
+			=> PublishedModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+#pragma warning restore 0109
+
+		// ctor
+		public Er(IPublishedContent content)
 			: base(content)
 		{ }
 
