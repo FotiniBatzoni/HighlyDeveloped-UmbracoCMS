@@ -16,8 +16,25 @@
 }
 @{
 	var articles = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("newsArticles").FirstOrDefault();
-		var heroOverlayColour = Model.Value<string>("heroOverlayColour");
+	var heroOverlayColour = Model.Value<string>("heroOverlayColour");
+	
+	var tags = articles.Children.Select(w => w.Value<string[]>("newsCategories"));
+	var categoryList = new List<string>();
+	
+	foreach(var tagArray in tags)
+	{
+	    foreach(var tag in tagArray)
+	    {
+	        if(!categoryList.Contains(tag))
+	        {
+	            categoryList.Add(tag);
+	        }
+	    }
+	}
 }
+
+
+
 
 @if(!string.IsNullOrEmpty(heroOverlayColour))
 {
@@ -41,12 +58,11 @@
                 <div class="row">
                     <div class="col p-0">
                         <!--Render the cards-->
-                            @foreach(var article in articles.Children.OrderByDescending(o => o.Value<DateTime>("postDate")))
+                        @foreach(var article in articles.Children.OrderByDescending(o => o.Value<DateTime> ("postDate")))
                             {
-                                var imgCropper = article.Value<ImageCropperValue>("articleImage");
-                                var imgUrl = imgCropper.Src + imgCropper.GetCropUrl("thumb");
-                                
-                                <!--Render the news card-->
+                                 var imgCropper = article.Value<ImageCropperValue>("articleImage");
+                                 var imgUrl = imgCropper.Src + imgCropper.GetCropUrl("thumb");
+
                                 <div class="card mt-25 mb-25">
                                     <a class="card-block stretched-link text-decoration-none" href="@article.Url">
                                         <div class="card-horizontal">
@@ -60,14 +76,19 @@
                                         </div>
                                     </a>
                                 </div>
-                            }
+                                }
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 bg-dark text-white-center">
+        <div class="col-md-4 bg-dark text-white center">
             <!--Render filters in the side bar-->
-            <h3>Filters go here</h3>
+            <h3>Categories</h3>
+            <ul>
+                @foreach(var category in categoryList.OrderBy(o => o)){
+                    <li>@category</li>
+                }
+            </ul>
         </div>
     </div>
     
