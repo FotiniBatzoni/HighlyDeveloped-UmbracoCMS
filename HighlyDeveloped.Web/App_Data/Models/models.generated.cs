@@ -17,8 +17,8 @@ using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Web;
 using Umbraco.ModelsBuilder.Embedded;
 
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "18f683df26461cb3")]
-[assembly:System.Reflection.AssemblyVersion("0.0.0.4")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "df157432ca26147d")]
+[assembly:System.Reflection.AssemblyVersion("0.0.0.1")]
 
 namespace Umbraco.Web.PublishedModels
 {
@@ -755,13 +755,13 @@ namespace Umbraco.Web.PublishedModels
 
 	// Mixin Content Type with alias "er"
 	/// <summary>Useful Links</summary>
-	public partial interface IEr : IPublishedContent
+	public partial interface IEr : IPublishedElement
 	{
 	}
 
 	/// <summary>Useful Links</summary>
 	[PublishedModel("er")]
-	public partial class Er : PublishedContentModel, IEr
+	public partial class Er : PublishedElementModel, IEr
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
@@ -778,7 +778,7 @@ namespace Umbraco.Web.PublishedModels
 #pragma warning restore 0109
 
 		// ctor
-		public Er(IPublishedContent content)
+		public Er(IPublishedElement content)
 			: base(content)
 		{ }
 
