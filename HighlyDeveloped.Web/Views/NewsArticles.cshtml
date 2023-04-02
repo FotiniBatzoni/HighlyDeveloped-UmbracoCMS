@@ -25,6 +25,26 @@
     {
         news = articles.Children.Where(w => w.Value<string[]>("newsCategories").Contains(Request.QueryString["cat"]));
     }
+    
+    
+    <!--Pagination-->
+    const int pageSize =1;
+    
+    var numPages = (int)Math.Ceiling((double)news.Count()) / (double)pageSize;
+    
+    var selectedPage = 1;
+    if(!string.IsNullOrEmpty(Request.QueryString["page"]))
+    {
+        int.TryParse(Request.QueryString["page"], out selectedPage);
+        
+        //Range check
+        if(selectedPage <=0 || selectedPage > numPages)
+        {   
+            selectedPage = 1;
+        }
+    }
+    
+    news = news.Skip((selectedPage -1)*pageSize).Take(pageSize).ToList();
 
 	var heroOverlayColour = Model.Value<string>("heroOverlayColour");
 	
@@ -86,9 +106,27 @@
                                         </div>
                                     </a>
                                 </div>
-                                }
+                            }
                     </div>
                 </div>
+                <!--Paging-->
+                @if(numPages > 1)
+                {
+                    <div class="row">
+                        <div class="col">
+                            <nav aria-label="Page nav">
+                              <ul class="pagination">
+                                <li class="page-item @(selectedPage <=1 ? "disabled" : "") "><a class="page-link" href="@(Model.Url + "?page=" +(selectedPage -1 ))">Previous</a></li>
+                                @for(int i =1; i<= numPages; i++)
+                                {
+                                    <li class="page-item @(selectedPage == i ? "active" : "" )"><a class="page-link" href="@(Model.Url + "?page=" +i )">@i</a></li>
+                                }
+                                <li class="page-item @(selectedPage >= numPages ? "disabled" : "") "><a class="page-link"  href="@(Model.Url + "?page=" +(selectedPage +1 ))">Next</a></li>
+                              </ul>
+                            </nav>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
         <div class="col-md-4 bg-dark text-white center">
