@@ -1,0 +1,67 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.SearchPage>
+@using ContentModels = Umbraco.Web.PublishedModels;
+@{
+	Layout = "Main.cshtml";
+	
+	var searchQuery = Request.QueryString["query"];
+	IEnumerable<PublishedSearchResult> searchResults;
+	var resultsCount = 0;
+	
+	//Do we have a search?
+	if(!string.IsNullOrEmpty(searchQuery))
+	{
+	    //Ask Umbraco to search for the term and give the results
+	    searchResults = Umbraco.ContentQuery.Search(searchQuery, string.Empty);
+	    
+	    resultsCount =  searchResults!= null && searchResults.Any() ? searchResults.Count() : 0;
+	}
+	else
+	{
+	    searchResults = null;
+	}
+	
+    var heroOverlayColour = Model.Value<string>("heroOverlayColour");
+}
+
+@if(!string.IsNullOrEmpty(heroOverlayColour))
+{
+    <style>
+        .home-hero > .overlay 
+        {
+            background-color: #@heroOverlayColour;
+            opacity: 0.5;
+        }
+    </style>
+    
+}
+
+@Html.Partial("Hero")
+
+<!--Render a SearchBox-->
+<header>
+    <form action="@Model.Url" method="Get">
+    <fieldset>
+        <input type="text" class="search-box" placeholder="Search..." name="query"></input>
+        <button class="search-button">Search</button>
+    </fieldset>
+    </form>
+</header>
+<h1>Search</h1>
+<!--Search Result to go there-->
+@if(!string.IsNullOrEmpty(searchQuery))
+{
+    <section>
+        @if(resultsCount == 0 || searchResults == null)
+        {
+            <text>
+                No results are found for @searchQuery
+            </text>
+        }
+        else
+        {
+            <text>
+                We found @resultsCount result(s).
+            </text>
+        }
+    </section>
+}
