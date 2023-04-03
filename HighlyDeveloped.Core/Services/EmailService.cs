@@ -6,6 +6,7 @@ using Umbraco.Web;
 using System.Linq;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Core.Services;
+using Umbraco.Core.Logging;
 
 namespace HighlyDeveloped.Core.Services
 {
@@ -18,14 +19,17 @@ namespace HighlyDeveloped.Core.Services
 
         private IContentService _contentService;
 
+        private ILogger _logger;
+
         /// <summary>
         /// Sending of the email to an admin when a new contact form comes in
         /// </summary>
         /// <param name="umbraco"></param>
-        public EmailService(UmbracoHelper umbraco, IContentService contentService)
+        public EmailService(UmbracoHelper umbraco, IContentService contentService, ILogger logger)
         {
             _umbraco = umbraco;
             _contentService = contentService;
+            _logger = logger;
         }
 
         public void SendContactNotificationToAdmin(ContactFormViewModel vm)
@@ -82,14 +86,14 @@ namespace HighlyDeveloped.Core.Services
 
             //Debug Mode
             var debugMode = siteSettings.Value<bool>("testMode");
-            var testEmailAccounts = siteSettings.Value<string>("emailTestAccounts");
+           // var testEmailAccounts = siteSettings.Value<string>("emailTestAccounts");
 
             var recipients = toAddresses;
 
             if (debugMode)
             {
                 //Change the TO - testEmailAccounts
-                recipients = testEmailAccounts;
+                //recipients = testEmailAccounts;
 
                 //Alter subject line - to show in test mode
                 subject += "(TEST MODE)" + toAddresses;
@@ -105,12 +109,52 @@ namespace HighlyDeveloped.Core.Services
             newEmail.SetValue("emailToAddress", recipients);
             newEmail.SetValue("emailHtmlContent", htmlContent);
             newEmail.SetValue("emailTextContent", textContent);
-            newEmail.SetValue("emailSend", false);
+           // newEmail.SetValue("emailSend", false);
             _contentService.SaveAndPublish(newEmail);
 
             //Send the email via smtp or whatever
+            var mimeType = new System.Net.Mime.ContentType("text/html");
+            var alternateView = AlternateView.CreateAlternateViewFromString(htmlContent, mimeType);
 
-   
+            var smtpMessage = new MailMessage();
+            smtpMessage.AlternateViews.Add(alternateView);
+
+            //To - collecction or one email
+            foreach(var recipient in recipients.Split(','))
+            {
+                if(!string.IsNullOrEmpty(recipient))
+                {
+                    smtpMessage.To.Add(recipient);
+                }
+            }
+
+            //From
+            smtpMessage.From = new MailAddress(fromAddress);
+
+            //Subject
+            smtpMessage.Subject = subject;
+
+            //Body
+            smtpMessage.Body = textContent;
+
+            //Sending
+            using(var smtp = new SmtpClient())
+            {
+                try
+                {
+                    smtp.Send(smtpMessage);
+                    newEmail.SetValue("emailSent", true);
+                    newEmail.SetValue("emailSentDate", DateTime.Now);
+                    _contentService.SaveAndPublish(newEmail);
+                }
+                catch(Exception ex)
+                {
+                    //Log the error
+                    _logger.Error<EmailService>("Problem sending the email", ex);
+                    throw ex;
+                }
+            }
+
         }
 
         /// <summary>
