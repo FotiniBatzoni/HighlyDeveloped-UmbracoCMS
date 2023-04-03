@@ -4,13 +4,21 @@ using System.Net.Mail;
 using System;
 using Umbraco.Web;
 using System.Linq;
+using Umbraco.Core.Models.PublishedContent;
 
 namespace HighlyDeveloped.Core.Services
 {
+    /// <summary>
+    /// The home to all outbound emails from my site
+    /// </summary>
     public class EmailService : IEmailService
     {
         private UmbracoHelper _umbraco;
 
+        /// <summary>
+        /// Sending of the email to an admin when a new contact form comes in
+        /// </summary>
+        /// <param name="umbraco"></param>
         public EmailService(UmbracoHelper umbraco)
         {
             _umbraco = umbraco;
@@ -18,7 +26,12 @@ namespace HighlyDeveloped.Core.Services
 
         public void SendContactNotificationToAdmin(ContactFormViewModel vm)
         {
+            //Get email template from Umbraco for "this notification is
+            var emailTemplate = GetEmailTemplate("New Contact Form Notification");
 
+            //Mail merge necessary fields
+
+            //Send email out to whoever
 
             //Get the site settings
             var siteSettings = _umbraco.ContentAtRoot().DescendantsOrSelfOfType("siteSettings").FirstOrDefault();
@@ -64,6 +77,23 @@ namespace HighlyDeveloped.Core.Services
             {
                 smtp.Send(smptMessage);
             }
+        }
+
+        /// <summary>
+        /// Returns the email template as IPublishedContent
+        /// where the title matches the template name
+        /// 
+        /// </summary>
+        /// <param name="templateName"></param>
+        /// <returns></returns>
+        private IPublishedContent GetEmailTemplate(string templateName)
+        {
+            var template = _umbraco.ContentAtRoot()
+                .DescendantsOrSelfOfType("emailTemplate")
+                .Where(x => x.Name == templateName)
+                .FirstOrDefault();
+
+            return template;
         }
     }
 }
