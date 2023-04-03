@@ -11,6 +11,7 @@ using Umbraco.Core.Logging;
 using System.Net.Mail;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
+using HighlyDeveloped.Core.Interfaces;
 
 namespace HighlyDeveloped.Core.Controllers
 {
@@ -19,6 +20,13 @@ namespace HighlyDeveloped.Core.Controllers
     /// </summary>
     public class ContactController : SurfaceController
     {
+        private IEmailService _emailService;
+
+        public ContactController(IEmailService emailService)
+        {
+            _emailService = emailService;
+        }
+
         public ActionResult RenderContactForm()
         {
             var vm = new ContactFormViewModel();

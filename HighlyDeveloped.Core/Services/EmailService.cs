@@ -3,6 +3,7 @@ using HighlyDeveloped.Core.ViewModel;
 using System.Net.Mail;
 using System;
 using Umbraco.Web;
+using System.Linq;
 
 namespace HighlyDeveloped.Core.Services
 {
