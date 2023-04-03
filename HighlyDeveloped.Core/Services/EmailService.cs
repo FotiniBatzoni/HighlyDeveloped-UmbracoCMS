@@ -5,6 +5,7 @@ using System;
 using Umbraco.Web;
 using System.Linq;
 using Umbraco.Core.Models.PublishedContent;
+using Umbraco.Core.Services;
 
 namespace HighlyDeveloped.Core.Services
 {
@@ -15,13 +16,16 @@ namespace HighlyDeveloped.Core.Services
     {
         private UmbracoHelper _umbraco;
 
+        private IContentService _contentService;
+
         /// <summary>
         /// Sending of the email to an admin when a new contact form comes in
         /// </summary>
         /// <param name="umbraco"></param>
-        public EmailService(UmbracoHelper umbraco)
+        public EmailService(UmbracoHelper umbraco, IContentService contentService)
         {
             _umbraco = umbraco;
+            _contentService = contentService;
         }
 
         public void SendContactNotificationToAdmin(ContactFormViewModel vm)
@@ -29,7 +33,29 @@ namespace HighlyDeveloped.Core.Services
             //Get email template from Umbraco for "this notification is
             var emailTemplate = GetEmailTemplate("New Contact Form Notification");
 
+            if(emailTemplate == null)
+            {
+                throw new Exception("Template not found");
+            }
+
+            //Get the template data
+            var subject = emailTemplate.Value<string>("emailTemplateSubjectLine");
+            var htmlContent = emailTemplate.Value<string>("emailTemplateHtmlContent");
+            var textContent = emailTemplate.Value<string>("emailTemplateTextContent");
+
             //Mail merge necessary fields
+
+            //##name##
+            htmlContent = htmlContent.Replace("##name##", vm.Name);
+            textContent = textContent.Replace("##name##", vm.Name);
+
+            //##email##
+            htmlContent = htmlContent.Replace("##email##", vm.EmailAddress);
+            textContent = textContent.Replace("##email##", vm.EmailAddress);
+
+            //##comment##
+            htmlContent = htmlContent.Replace("##comment##", vm.Comment);
+            textContent = textContent.Replace("##comment##", vm.Comment);
 
             //Send email out to whoever
 
@@ -54,29 +80,37 @@ namespace HighlyDeveloped.Core.Services
                 throw new Exception("There needs to be a from address in site settings");
             }
 
-            //Construct the actual email
-            var emailSubject = "There has been a contact form submitted";
-            var emailBody = $"A new contact form has been received from {vm.Name}. Their comments were: {vm.Comment}";
-            var smptMessage = new MailMessage();
-            smptMessage.Subject = emailSubject;
-            smptMessage.Body = emailBody;
-            smptMessage.From = new MailAddress(fromAddress);
+            //Debug Mode
+            var debugMode = siteSettings.Value<bool>("testMode");
+            var testEmailAccounts = siteSettings.Value<string>("emailTestAccounts");
 
-            var toList = toAddresses.Split(',');
-            foreach (var item in toList)
+            var recipients = toAddresses;
+
+            if (debugMode)
             {
-                if (!String.IsNullOrEmpty(item))
-                {
-                    smptMessage.To.Add(item);
-                }
+                //Change the TO - testEmailAccounts
+                recipients = testEmailAccounts;
 
+                //Alter subject line - to show in test mode
+                subject += "(TEST MODE)" + toAddresses;
             }
 
-            //Send via whatever email service
-            using (var smtp = new SmtpClient())
-            {
-                smtp.Send(smptMessage);
-            }
+            //Log the email in umbraco
+            var emails = _umbraco.ContentAtRoot()
+                .DescendantsOrSelfOfType("emails").FirstOrDefault();
+
+            var newEmail = _contentService.Create(toAddresses, emails.Id, "Email");
+
+            newEmail.SetValue("emailSubject", subject);
+            newEmail.SetValue("emailToAddress", recipients);
+            newEmail.SetValue("emailHtmlContent", htmlContent);
+            newEmail.SetValue("emailTextContent", textContent);
+            newEmail.SetValue("emailSend", false);
+            _contentService.SaveAndPublish(newEmail);
+
+            //Send the email via smtp or whatever
+
+   
         }
 
         /// <summary>

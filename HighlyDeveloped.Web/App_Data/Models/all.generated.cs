@@ -6,8 +6,8 @@ using  Umbraco.Core.Models;
 using  Umbraco.Core.Models.PublishedContent;
 using  Umbraco.Web;
 using  Umbraco.ModelsBuilder.Embedded;
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "3f9b0f2eff7be750")]
-[assembly:System.Reflection.AssemblyVersion("0.0.0.6")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "721a1284ac06fbbb")]
+[assembly:System.Reflection.AssemblyVersion("0.0.0.1")]
 
 
 // FILE: models.generated.cs
@@ -174,6 +174,13 @@ namespace Umbraco.Web.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.7")]
 		[ImplementPropertyType("emailSettingsFromAddress")]
 		public virtual string EmailSettingsFromAddress => this.Value<string>("emailSettingsFromAddress");
+
+		///<summary>
+		/// Email Test Accounts: This comma delimited list of email addresses will be used to send emails to when in test mode
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.7")]
+		[ImplementPropertyType("emailTestAccounts")]
+		public virtual string EmailTestAccounts => this.Value<string>("emailTestAccounts");
 
 		///<summary>
 		/// Recaptcha Secret Key: This is the private key for recaptcha
