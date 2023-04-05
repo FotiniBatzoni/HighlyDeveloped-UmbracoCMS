@@ -81,7 +81,6 @@ namespace HighlyDeveloped.Core.Controllers
                     newContact.SetValue("contactEmail", vm.EmailAddress);
                     newContact.SetValue("contactSubject", vm.Subject);
                     newContact.SetValue("contactComment", vm.Comment);
-                    newContact.SetValue("emailSend", true);
                     Services.ContentService.SaveAndPublish(newContact);
                 }
 
