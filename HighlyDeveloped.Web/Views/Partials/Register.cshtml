@@ -1,0 +1,11 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<HighlyDeveloped.Core.ViewModel.RegisterViewModel>
+@using HighlyDeveloped.Core.Controllers
+@{ 
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
+}
+<h1>Register Form</h1>
+@using (Html.BeginUmbracoForm<RegisterController>("HandleRegister"))
+ {
+
+ }
