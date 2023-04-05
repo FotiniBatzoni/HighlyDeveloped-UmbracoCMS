@@ -62,6 +62,9 @@ namespace HighlyDeveloped.Core.Controllers
             Services.MemberService.AssignRole(newMember.Id, "Normal User");
 
             //Create email verification token
+            var token = Guid.NewGuid().ToString();
+            newMember.SetValue("emailVerification", token);
+            Services.MemberService.Save(newMember);
 
 
             //Sens email verification
