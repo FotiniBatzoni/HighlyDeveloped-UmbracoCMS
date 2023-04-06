@@ -77,7 +77,15 @@ namespace HighlyDeveloped.Core.Controllers
 
 
             //Send email verification
-            _emailService.SendVerifyEmailAddressNotification(newMember.Email, token);
+            try
+            {
+                _emailService.SendVerifyEmailAddressNotification(newMember.Email, token);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Something's wrong. Please try again later");
+            }
+         
 
             //Thank the user
             TempData["status"] = "OK";
