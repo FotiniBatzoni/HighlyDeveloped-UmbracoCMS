@@ -7,6 +7,7 @@ using System.Linq;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Core.Services;
 using Umbraco.Core.Logging;
+using System.Web;
 
 namespace HighlyDeveloped.Core.Services
 {
@@ -69,22 +70,43 @@ namespace HighlyDeveloped.Core.Services
             }
 
             //Read email FROM and TO addresses
-            var fromAddress = siteSettings.Value<string>("emailSettingsFromAddress");
             var toAddresses = siteSettings.Value<string>("emailSettingsAdminAccounts");
-
-            if (string.IsNullOrEmpty(fromAddress))
-            {
-                throw new Exception("There needs to be a from address in site settings");
-            }
 
             if (string.IsNullOrEmpty(toAddresses))
             {
                 throw new Exception("There needs to be a from address in site settings");
             }
 
+            Sendmail(toAddresses, subject, htmlContent, textContent);
+
+        }
+
+        /// <summary>
+        /// A generic send mail that logs the email in umbraco and sends via smtp
+        /// </summary>
+        /// <param name="toAddresses"></param>
+        /// <param name="subject"></param>
+        /// <param name="htmlContent"></param>
+        /// <param name="textContent"></param>
+        /// <exception cref="Exception"></exception>
+        private void Sendmail(string toAddresses, string subject, string htmlContent, string textContent)
+        {
+            //Get the site settings
+            var siteSettings = _umbraco.ContentAtRoot().DescendantsOrSelfOfType("siteSettings").FirstOrDefault();
+            if (siteSettings == null)
+            {
+                throw new Exception("There are no site settings");
+            }
+
+            var fromAddress = siteSettings.Value<string>("emailSettingsFromAddress");
+            if (string.IsNullOrEmpty(fromAddress))
+            {
+                throw new Exception("There needs to be a from address in site settings");
+            }
+
             //Debug Mode
             var debugMode = siteSettings.Value<bool>("testMode");
-           // var testEmailAccounts = siteSettings.Value<string>("emailTestAccounts");
+            // var testEmailAccounts = siteSettings.Value<string>("emailTestAccounts");
 
             var recipients = toAddresses;
 
@@ -107,7 +129,7 @@ namespace HighlyDeveloped.Core.Services
             newEmail.SetValue("emailToAddress", recipients);
             newEmail.SetValue("emailHtmlContent", htmlContent);
             newEmail.SetValue("emailTextContent", textContent);
-           // newEmail.SetValue("emailSend", false);
+            // newEmail.SetValue("emailSend", false);
             _contentService.SaveAndPublish(newEmail);
 
             //Send the email via smtp or whatever
@@ -118,9 +140,9 @@ namespace HighlyDeveloped.Core.Services
             smtpMessage.AlternateViews.Add(alternateView);
 
             //To - collecction or one email
-            foreach(var recipient in recipients.Split(','))
+            foreach (var recipient in recipients.Split(','))
             {
-                if(!string.IsNullOrEmpty(recipient))
+                if (!string.IsNullOrEmpty(recipient))
                 {
                     smtpMessage.To.Add(recipient);
                 }
@@ -136,7 +158,7 @@ namespace HighlyDeveloped.Core.Services
             smtpMessage.Body = textContent;
 
             //Sending
-            using(var smtp = new SmtpClient())
+            using (var smtp = new SmtpClient())
             {
                 try
                 {
@@ -145,14 +167,13 @@ namespace HighlyDeveloped.Core.Services
                     newEmail.SetValue("emailSentDate", DateTime.Now);
                     _contentService.SaveAndPublish(newEmail);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     //Log the error
                     _logger.Error<EmailService>("Problem sending the email", ex);
                     throw ex;
                 }
             }
-
         }
 
 
@@ -178,10 +199,14 @@ namespace HighlyDeveloped.Core.Services
             var textContent = emailTemplate.Value<string>("emailTemplateTextContent");
 
             //Mail Merge
-            var url = "";
+            var url = HttpContext.Current.Request.Url.AbsoluteUri
+                    .Replace(HttpContext.Current.Request.Url.AbsolutePath, string.Empty);
+            url += $"verify?token={verificationToken}";
+
             MailMerge("verify-url", url, ref htmlContent, ref textContent);
 
             //Log the email
+
 
             //Send the email
         }
