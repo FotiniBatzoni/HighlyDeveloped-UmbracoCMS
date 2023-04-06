@@ -15,7 +15,7 @@ namespace HighlyDeveloped.Core.Controllers
         private const string PARTIAL_VIEW_FOLDER = "~/Views/Partials/";
         private IEmailService _emailService;
 
-
+        #region Register Form
         public RegisterController(IEmailService emailService)
         {
             _emailService = emailService;
@@ -92,5 +92,42 @@ namespace HighlyDeveloped.Core.Controllers
 
             return RedirectToCurrentUmbracoPage();
         }
+
+        #endregion
+
+        #region Verification
+
+        public ActionResult RenderEmailVerification(string token)
+        {
+            //Get token (querystring)
+
+            //Look for a member matching this token
+            var member = Services.MemberService.GetMembersByPropertyValue("emailVerifyToken", token).SingleOrDefault();
+            if(member != null)
+            {
+                //If find one, set them to verify
+                var alreadyVerified = member.GetValue<bool>("emailVerified");
+                if(alreadyVerified)
+                {
+                    ModelState.AddModelError("Verified", "You've already verified your email address.Thanks");
+                    return CurrentUmbracoPage();
+                }
+                member.SetValue("emailVerified", true);
+                member.SetValue("emailVerificationDate", DateTime.Now);
+                Services.MemberService.Save(member);
+
+                //Thank the user
+                TempData["status"] = "OK";
+                return PartialView(PARTIAL_VIEW_FOLDER + "EmailVerification.cshtml");
+            }
+
+            //Otherwise...some problem
+            ModelState.AddModelError("Error", "Apologies there has been a problem");
+
+            return CurrentUmbracoPage();
+        }
+
+
+        #endregion
     }
 }
