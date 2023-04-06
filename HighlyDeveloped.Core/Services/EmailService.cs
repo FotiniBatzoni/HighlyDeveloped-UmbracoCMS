@@ -50,16 +50,14 @@ namespace HighlyDeveloped.Core.Services
             //Mail merge necessary fields
 
             //##name##
-            htmlContent = htmlContent.Replace("##name##", vm.Name);
-            textContent = textContent.Replace("##name##", vm.Name);
+            MailMerge("name", vm.Name, ref htmlContent, ref textContent);
 
             //##email##
-            htmlContent = htmlContent.Replace("##email##", vm.EmailAddress);
-            textContent = textContent.Replace("##email##", vm.EmailAddress);
+            MailMerge("email", vm.EmailAddress, ref htmlContent, ref textContent);
 
             //##comment##
-            htmlContent = htmlContent.Replace("##comment##", vm.Comment);
-            textContent = textContent.Replace("##comment##", vm.Comment);
+            MailMerge("comment", vm.Comment, ref htmlContent, ref textContent);
+ 
 
             //Send email out to whoever
 
@@ -167,12 +165,31 @@ namespace HighlyDeveloped.Core.Services
         public void SendVerifyEmailAddressNotification(string membersEmail, string verificationToken)
         {
             //Get Template - create a new template in umbraco
+            var emailTemplate = GetEmailTemplate("Verify Email");
+
+            if (emailTemplate == null)
+            {
+                throw new Exception("Template not found");
+            }
+
+            //Get the template data
+            var subject = emailTemplate.Value<string>("emailTemplateSubjectLine");
+            var htmlContent = emailTemplate.Value<string>("emailTemplateHtmlContent");
+            var textContent = emailTemplate.Value<string>("emailTemplateTextContent");
 
             //Mail Merge
+            var url = "";
+            MailMerge("verify-url", url, ref htmlContent, ref textContent);
 
             //Log the email
 
             //Send the email
+        }
+
+        private void MailMerge(string token, string value, ref string htmlContent, ref string textContent)
+        {
+            htmlContent = htmlContent.Replace($"##{token}##", value);
+            textContent = textContent.Replace($"##v{token}##", value); ;
         }
 
 
