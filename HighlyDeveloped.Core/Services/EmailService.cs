@@ -77,7 +77,7 @@ namespace HighlyDeveloped.Core.Services
                 throw new Exception("There needs to be a from address in site settings");
             }
 
-            Sendmail(toAddresses, subject, htmlContent, textContent);
+            SendEmail(toAddresses, subject, htmlContent, textContent);
 
         }
 
@@ -89,7 +89,7 @@ namespace HighlyDeveloped.Core.Services
         /// <param name="htmlContent"></param>
         /// <param name="textContent"></param>
         /// <exception cref="Exception"></exception>
-        private void Sendmail(string toAddresses, string subject, string htmlContent, string textContent)
+        private void SendEmail(string toAddresses, string subject, string htmlContent, string textContent)
         {
             //Get the site settings
             var siteSettings = _umbraco.ContentAtRoot().DescendantsOrSelfOfType("siteSettings").FirstOrDefault();
@@ -206,9 +206,8 @@ namespace HighlyDeveloped.Core.Services
             MailMerge("verify-url", url, ref htmlContent, ref textContent);
 
             //Log the email
-
-
             //Send the email
+            SendEmail(membersEmail, subject, htmlContent, textContent);
         }
 
         private void MailMerge(string token, string value, ref string htmlContent, ref string textContent)
