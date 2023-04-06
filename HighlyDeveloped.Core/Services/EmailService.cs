@@ -157,6 +157,36 @@ namespace HighlyDeveloped.Core.Services
 
         }
 
+
+        /// <summary>
+        /// Send the email verification link to the new member
+        /// </summary>
+        /// <param name="membersEmail"></param>
+        /// <param name="verificationToken"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        public void SendVerifyEmailAddressNotification(string membersEmail, string verificationToken)
+        {
+            //Get Template - create a new template in umbraco
+
+            //Mail Merge
+
+            //Log the email
+
+            //Send the email
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
         /// <summary>
         /// Returns the email template as IPublishedContent
         /// where the title matches the template name

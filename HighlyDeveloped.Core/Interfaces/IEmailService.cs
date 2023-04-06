@@ -13,5 +13,7 @@ namespace HighlyDeveloped.Core.Interfaces
     public interface IEmailService
     {
         void SendContactNotificationToAdmin(ContactFormViewModel vm);
+
+        void SendVerifyEmailAddressNotification(string membersEmail, string verificationToken);
     }
 }

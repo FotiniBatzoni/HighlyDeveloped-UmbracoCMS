@@ -1,4 +1,5 @@
-﻿using HighlyDeveloped.Core.ViewModel;
+﻿using HighlyDeveloped.Core.Interfaces;
+using HighlyDeveloped.Core.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,14 @@ namespace HighlyDeveloped.Core.Controllers
     public class RegisterController :SurfaceController
     {
         private const string PARTIAL_VIEW_FOLDER = "~/Views/Partials/";
+        private IEmailService _emailService;
+
+
+        public RegisterController(IEmailService emailService)
+        {
+            _emailService = emailService;
+        }
+
         public ActionResult RenderRegister()
         {
             var vm = new RegisterViewModel();
@@ -67,7 +76,9 @@ namespace HighlyDeveloped.Core.Controllers
             Services.MemberService.Save(newMember);
 
 
-            //Sens email verification
+            //Send email verification
+            _emailService.SendVerifyEmailAddressNotification(newMember.Email, token);
+
             return CurrentUmbracoPage();
         }
     }
