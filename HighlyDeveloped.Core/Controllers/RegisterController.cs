@@ -72,14 +72,17 @@ namespace HighlyDeveloped.Core.Controllers
 
             //Create email verification token
             var token = Guid.NewGuid().ToString();
-            newMember.SetValue("emailVerification", token);
+            newMember.SetValue("emailVerifyToken", token);
             Services.MemberService.Save(newMember);
 
 
             //Send email verification
             _emailService.SendVerifyEmailAddressNotification(newMember.Email, token);
 
-            return CurrentUmbracoPage();
+            //Thank the user
+            TempData["status"] = "OK";
+
+            return RedirectToCurrentUmbracoPage();
         }
     }
 }

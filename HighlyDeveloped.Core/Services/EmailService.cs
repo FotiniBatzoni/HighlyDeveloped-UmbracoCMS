@@ -201,7 +201,7 @@ namespace HighlyDeveloped.Core.Services
             //Mail Merge
             var url = HttpContext.Current.Request.Url.AbsoluteUri
                     .Replace(HttpContext.Current.Request.Url.AbsolutePath, string.Empty);
-            url += $"verify?token={verificationToken}";
+            url += $"/verify?token={verificationToken}";
 
             MailMerge("verify-url", url, ref htmlContent, ref textContent);
 
@@ -213,15 +213,8 @@ namespace HighlyDeveloped.Core.Services
         private void MailMerge(string token, string value, ref string htmlContent, ref string textContent)
         {
             htmlContent = htmlContent.Replace($"##{token}##", value);
-            textContent = textContent.Replace($"##v{token}##", value); ;
+            textContent = textContent.Replace($"##{token}##", value); ;
         }
-
-
-
-
-
-
-
 
 
 
