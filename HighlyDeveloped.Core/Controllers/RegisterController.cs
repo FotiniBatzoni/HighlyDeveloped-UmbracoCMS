@@ -113,7 +113,7 @@ namespace HighlyDeveloped.Core.Controllers
                     return CurrentUmbracoPage();
                 }
                 member.SetValue("emailVerified", true);
-                member.SetValue("emailVerificationDate", DateTime.Now);
+                member.SetValue("emailVerifiedDate", DateTime.Now);
                 Services.MemberService.Save(member);
 
                 //Thank the user
