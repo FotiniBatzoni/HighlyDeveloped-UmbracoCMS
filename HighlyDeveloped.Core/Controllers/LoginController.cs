@@ -1,11 +1,5 @@
 ﻿using HighlyDeveloped.Core.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 using Umbraco.Web.Mvc;
 
 namespace HighlyDeveloped.Core.Controllers
@@ -21,6 +15,54 @@ namespace HighlyDeveloped.Core.Controllers
             var vm = new LoginViewModel();
             vm.RedirectUrl = HttpContext.Request.Url.AbsolutePath;
             return PartialView(PARTIAL_VIEW_FOLDER + "Login.cshtml", vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult HandleLogin(LoginViewModel vm)
+        {
+            //Check if model is ok
+            if (!ModelState.IsValid)
+            {
+                return CurrentUmbracoPage();
+            }
+
+            //Check if the member exists with that username
+            var member = Services.MemberService.GetByUsername(vm.UserName);
+            if(member == null)
+            {
+                ModelState.AddModelError("Login", "Cannot find that username in the system");
+                return CurrentUmbracoPage();
+            }
+
+            //Check if the member is locked out
+            if (member.IsLockedOut)
+            {
+                ModelState.AddModelError("Login", "The account is locked, please use forgotten password to reset");
+            }
+
+            //Check if they have validated their email address
+            var emailVerified = member.GetValue<bool>("emailVerified");
+            if (!emailVerified)
+            {
+                ModelState.AddModelError("Login", "Please verify your email to login");
+                return CurrentUmbracoPage();
+            }
+
+            //Check if credentials are ok
+            //Log them in
+            if(!Members.Login(vm.UserName, vm.Password))
+            {
+                ModelState.AddModelError("Login", "The username/password is not correct");
+                return CurrentUmbracoPage();
+            }
+
+            if(!string.IsNullOrEmpty(vm.RedirectUrl))
+            {
+                return Redirect(vm.RedirectUrl);
+            }
+
+            return RedirectToCurrentUmbracoPage();
         }
     }
 }
