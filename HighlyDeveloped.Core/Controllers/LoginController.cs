@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HighlyDeveloped.Core.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,10 +15,10 @@ namespace HighlyDeveloped.Core.Controllers
     /// </summary>
     public class LoginController : SurfaceController
     {
-        public const string PARTIAL_VIEW_FOLDER="~/Views/Partials/Login";
+        public const string PARTIAL_VIEW_FOLDER="~/Views/Partials/Login/";
         public ActionResult RenderLogin()
         {
-            var vm = LoginViewModel();
+            var vm = new LoginViewModel();
             vm.RedirectUrl = HttpContext.Request.Url.AbsolutePath;
             return PartialView(PARTIAL_VIEW_FOLDER + "Login.cshtml", vm);
         }
