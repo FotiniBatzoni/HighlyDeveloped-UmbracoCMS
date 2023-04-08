@@ -39,6 +39,7 @@ namespace HighlyDeveloped.Core.Controllers
             if (member.IsLockedOut)
             {
                 ModelState.AddModelError("Login", "The account is locked, please use forgotten password to reset");
+                return CurrentUmbracoPage();
             }
 
             //Check if they have validated their email address
