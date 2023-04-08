@@ -17,8 +17,8 @@ using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Web;
 using Umbraco.ModelsBuilder.Embedded;
 
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "4117b15c1d556b0f")]
-[assembly:System.Reflection.AssemblyVersion("0.0.0.2")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "6d8aeb2afbf01c55")]
+[assembly:System.Reflection.AssemblyVersion("0.0.0.3")]
 
 namespace Umbraco.Web.PublishedModels
 {
@@ -1560,6 +1560,20 @@ namespace Umbraco.Web.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.7")]
 		[ImplementPropertyType("emailVerifyToken")]
 		public virtual string EmailVerifyToken => this.Value<string>("emailVerifyToken");
+
+		///<summary>
+		/// Reset Expiry Date: This is the date the reset link is valid until
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.7")]
+		[ImplementPropertyType("resetExpiryDate")]
+		public virtual global::System.DateTime ResetExpiryDate => this.Value<global::System.DateTime>("resetExpiryDate");
+
+		///<summary>
+		/// Reset Link Token: This is the unique token to send user to identify them using the link
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.7")]
+		[ImplementPropertyType("resetLinkToken")]
+		public virtual string ResetLinkToken => this.Value<string>("resetLinkToken");
 
 		///<summary>
 		/// Is Approved
