@@ -237,5 +237,39 @@ namespace HighlyDeveloped.Core.Services
 
             return template;
         }
+
+
+
+        /// <summary>
+        /// Send the reset password to the user
+        /// </summary>
+        /// <param name="membersEmail"></param>
+        /// <param name="resetToken"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        public void SendResetPasswordNotification(string membersEmail, string resetToken)
+        {
+            //Get Template
+            var emailTemplate = GetEmailTemplate("Reset Password");
+
+            if (emailTemplate == null)
+            {
+                throw new Exception("Template not found");
+            }
+
+            //Get the data
+            var subject = emailTemplate.Value<string>("emailTemplateSubjectLine");
+            var htmlContent = emailTemplate.Value<string>("emailTemplateHtmlContent");
+            var textContent = emailTemplate.Value<string>("emailTemplateTextContent");
+
+            //Mail merge
+            var url = HttpContext.Current.Request.Url.AbsoluteUri
+                .Replace(HttpContext.Current.Request.Url.AbsolutePath, string.Empty);
+            url += $"/reset-password?token={resetToken}";
+
+            MailMerge("reset-url", url, ref htmlContent, ref textContent);
+
+            //Send
+            SendEmail(membersEmail, subject, htmlContent, textContent);
+        }
     }
 }
