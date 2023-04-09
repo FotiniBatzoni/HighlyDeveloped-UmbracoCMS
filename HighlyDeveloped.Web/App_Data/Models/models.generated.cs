@@ -17,8 +17,8 @@ using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Web;
 using Umbraco.ModelsBuilder.Embedded;
 
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "e3fa528f4ebaa9ef")]
-[assembly:System.Reflection.AssemblyVersion("0.0.0.2")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "8482f0ae49b6f089")]
+[assembly:System.Reflection.AssemblyVersion("0.0.0.1")]
 
 namespace Umbraco.Web.PublishedModels
 {
@@ -1228,7 +1228,7 @@ namespace Umbraco.Web.PublishedModels
 
 	/// <summary>Reset Password</summary>
 	[PublishedModel("resetPassword")]
-	public partial class ResetPassword : PublishedContentModel
+	public partial class ResetPassword : PublishedContentModel, INavigation
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
@@ -1250,6 +1250,13 @@ namespace Umbraco.Web.PublishedModels
 		{ }
 
 		// properties
+
+		///<summary>
+		/// Umbraco Navi Hide: If this checked the page won't appear in the menu
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.7")]
+		[ImplementPropertyType("umbracoNaviHide")]
+		public virtual bool UmbracoNaviHide => global::Umbraco.Web.PublishedModels.Navigation.GetUmbracoNaviHide(this);
 	}
 
 	/// <summary>Folder</summary>
