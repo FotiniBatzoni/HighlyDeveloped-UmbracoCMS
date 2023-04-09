@@ -1,4 +1,5 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<HighlyDeveloped.Core.ViewModel.LoginViewModel>
+@using HighlyDeveloped.Core.Controllers
 @{
     Html.EnableClientValidation();
     Html.EnableUnobtrusiveJavaScript();
@@ -9,12 +10,12 @@
 @if (Umbraco.MemberIsLoggedOn())
 {
     <!--If yes, show logout-->
-    if(myUser != null)
+    if (myUser != null)
     {
         <p><strong>Logged in as</strong> @myUser.UserName</p>
         <a href="/logout/" class="btn btn-danger">Log out</a>
         <i class="fa fa-arrow-right"></i>
-    }  
+    }
 }
 else
 {
@@ -22,7 +23,7 @@ else
     <div class="container">
         <div class="row">
             <div class="col">
-                @using (Html.BeginUmbracoForm<HighlyDeveloped.Core.Controllers.ContactController>("HandleLogin"))
+                @using (Html.BeginUmbracoForm<LoginController>("HandleLogin"))
                 {
                     @Html.AntiForgeryToken();
                     @Html.ValidationSummary();
@@ -43,13 +44,15 @@ else
                            })
                     </div>
 
+                    @Html.HiddenFor(m => m.RedirectUrl)
+
                     <button name="/login" type="submit">Login</button>
                 }
             </div>
         </div>
         <div class="row">
             <div class="col">
-               <a href="/forgotten-password/">Forgotten password?</a>
+                <a href="/forgotten-password/">Forgotten password?</a>
             </div>
         </div>
     </div>

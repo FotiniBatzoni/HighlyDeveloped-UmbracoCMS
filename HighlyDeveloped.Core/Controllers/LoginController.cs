@@ -176,7 +176,7 @@ namespace HighlyDeveloped.Core.Controllers
             //If ok, update the password for the member
             Services.MemberService.SavePassword(member, vm.Password);
             member.SetValue("resetLinkToken", string.Empty);
-            member.SetValue("resetExpireDate", null);
+            member.SetValue("resetExpiryDate", null);
             member.IsLockedOut = false;
             Services.MemberService.Save(member);
 
