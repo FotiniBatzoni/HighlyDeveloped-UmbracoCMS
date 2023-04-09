@@ -129,5 +129,15 @@ namespace HighlyDeveloped.Core.Controllers
             return RedirectToCurrentUmbracoPage();
         }
         #endregion
+
+        #region Reset Password
+
+        public ActionResult RenderResetPassword()
+        {
+            var vm = new ResetPasswordViewModel();
+            return PartialView(PARTIAL_VIEW_FOLDER + "ResetPassword.cshtml", vm);
+        }
+
+        #endregion
     }
 }
