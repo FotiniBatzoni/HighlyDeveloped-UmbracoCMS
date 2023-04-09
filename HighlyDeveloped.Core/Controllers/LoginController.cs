@@ -4,6 +4,7 @@ using System;
 using System.Web.Mvc;
 using Umbraco.Web.Mvc;
 using Umbraco.Core.Logging;
+using System.Linq;
 
 namespace HighlyDeveloped.Core.Controllers
 {
@@ -136,6 +137,56 @@ namespace HighlyDeveloped.Core.Controllers
         {
             var vm = new ResetPasswordViewModel();
             return PartialView(PARTIAL_VIEW_FOLDER + "ResetPassword.cshtml", vm);
+        }
+
+        public ActionResult HandleResetPassword(ResetPasswordViewModel vm)
+        {
+            //Get the reset token
+            if(!ModelState.IsValid) 
+            { 
+                return CurrentUmbracoPage(); 
+            }
+
+            //Ensure that we have a token
+            var token = Request.QueryString["token"];
+            if (string.IsNullOrEmpty(token))
+            {
+                Logger.Warn<LoginController>("Reset Password - no token found");
+                ModelState.AddModelError("Error", "Invalid Token");
+                return CurrentUmbracoPage();
+            }
+            //Get the member for the token
+            var member = Services.MemberService.GetMembersByPropertyValue("resetLinkToken", token).SingleOrDefault();
+            if (member == null)
+            {
+                ModelState.AddModelError("Error", "That link is no longer valid");
+                return CurrentUmbracoPage();
+            }
+
+            // Check the time window hasn't expire
+            var membersTokenExpiryDate = member.GetValue<DateTime>("resetExpiryDate");
+            var currentTime = DateTime.Now;
+            if(currentTime.CompareTo(membersTokenExpiryDate) >= 0)
+            {
+                ModelState.AddModelError("Error", "Sorry the link has expired, please use the Forgotten Password page to generate a new one");
+                return CurrentUmbracoPage();
+            }
+
+
+            //If ok, update the password for the member
+            Services.MemberService.SavePassword(member, vm.Password);
+            member.SetValue("resetLinkToken", string.Empty);
+            member.SetValue("resetExpireDate", null);
+            member.IsLockedOut = false;
+            Services.MemberService.Save(member);
+
+            //Send out the email notification that the password changed
+            _emailService.SendPasswordChangedNotification(member.Email);
+
+
+            //Thanks
+            TempData["status"] = "OK";
+            return null;
         }
 
         #endregion
