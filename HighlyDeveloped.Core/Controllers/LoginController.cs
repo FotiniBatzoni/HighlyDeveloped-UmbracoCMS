@@ -186,7 +186,9 @@ namespace HighlyDeveloped.Core.Controllers
 
             //Thanks
             TempData["status"] = "OK";
-            return null;
+            Logger.Info<LoginController>($"User {member.Username} has changed their password");
+            
+            return RedirectToCurrentUmbracoPage();
         }
 
         #endregion
