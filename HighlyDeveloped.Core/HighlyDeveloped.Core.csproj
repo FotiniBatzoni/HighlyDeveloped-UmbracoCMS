@@ -285,6 +285,7 @@
     <Compile Include="ViewModel\ForgottenPasswordViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
+    <Compile Include="ViewModel\ResetPasswordViewModel.cs" />
     <Compile Include="ViewModel\TwitterViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
