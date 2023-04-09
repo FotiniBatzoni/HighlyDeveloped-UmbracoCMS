@@ -12,7 +12,7 @@
     if(myUser != null)
     {
         <p><strong>Logged in as</strong> @myUser.UserName</p>
-        <a href="/logout" class="btn btn-danger">Log out</a>
+        <a href="/logout/" class="btn btn-danger">Log out</a>
         <i class="fa fa-arrow-right"></i>
     }  
 }
@@ -43,13 +43,13 @@ else
                            })
                     </div>
 
-                    <button name="login" type="submit">Login</button>
+                    <button name="/login" type="submit">Login</button>
                 }
             </div>
         </div>
         <div class="row">
             <div class="col">
-                //todo : forgottern password link
+               <a href="/forgotten-password/">Forgotten password?</a>
             </div>
         </div>
     </div>
