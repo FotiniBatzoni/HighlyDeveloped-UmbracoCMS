@@ -17,5 +17,7 @@ namespace HighlyDeveloped.Core.Interfaces
         void SendVerifyEmailAddressNotification(string membersEmail, string verificationToken);
 
         void SendResetPasswordNotification(string membersEmail, string resetToken);
+
+        void SendPasswordChangedNotification(string membersEmail);
     }
 }

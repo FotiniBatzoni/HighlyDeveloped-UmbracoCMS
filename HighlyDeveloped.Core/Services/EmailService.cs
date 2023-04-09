@@ -271,5 +271,33 @@ namespace HighlyDeveloped.Core.Services
             //Send
             SendEmail(membersEmail, subject, htmlContent, textContent);
         }
+
+
+        /// <summary>
+        /// Send a note to the user telling them that they have changed their password
+        /// </summary>
+        /// <param name="membersEmail"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        public void SendPasswordChangedNotification(string membersEmail)
+        {
+            //Get Template
+            var emailTemplate = GetEmailTemplate("Password Changed");
+
+            if (emailTemplate == null)
+            {
+                throw new Exception("Template not found");
+            }
+
+            //Get the data
+            var subject = emailTemplate.Value<string>("emailTemplateSubjectLine");
+            var htmlContent = emailTemplate.Value<string>("emailTemplateHtmlContent");
+            var textContent = emailTemplate.Value<string>("emailTemplateTextContent");
+
+            //Mail merge
+            //No mail merging is needed
+
+            //Send
+            SendEmail(membersEmail, subject, htmlContent, textContent);
+        }
     }
 }
