@@ -10,6 +10,8 @@ namespace HighlyDeveloped.Core.Controllers
     public class LoginController : SurfaceController
     {
         public const string PARTIAL_VIEW_FOLDER="~/Views/Partials/Login/";
+
+        #region Login
         public ActionResult RenderLogin()
         {
             var vm = new LoginViewModel();
@@ -65,5 +67,16 @@ namespace HighlyDeveloped.Core.Controllers
 
             return RedirectToCurrentUmbracoPage();
         }
+
+        #endregion
+
+        #region Forgotten Password
+        public ActionResult RenderForgottenPassword()
+        {
+            var vm = new ForgottenPasswordViewModel();
+
+            return PartialView(PARTIAL_VIEW_FOLDER + "ForgottenPassword.cshtml", vm);
+        }
+        #endregion
     }
 }
