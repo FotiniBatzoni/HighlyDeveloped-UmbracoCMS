@@ -354,6 +354,7 @@
     <Content Include="Views\Partials\EmailVerification.cshtml" />
     <Content Include="Views\Partials\Login\Login.cshtml" />
     <Content Include="Views\Partials\Login\ResetPassword.cshtml" />
+    <Content Include="Views\Partials\MyAccount\MyAccount.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,9 +1,4 @@
 ﻿using HighlyDeveloped.Core.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
 using Umbraco.Web.Mvc;
@@ -12,7 +7,7 @@ namespace HighlyDeveloped.Core.Controllers
 {
     public class AccountController : SurfaceController
     {
-        public const string PARTIAL_VIEW_FOLDER = "~/Views/Partials/MyAccount";
+        public const string PARTIAL_VIEW_FOLDER = "~/Views/Partials/MyAccount/";
         public ActionResult RenderMyAccount()
         {
             var vm = new AccountViewModel();

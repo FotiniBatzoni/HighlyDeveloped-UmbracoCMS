@@ -308,6 +308,7 @@ Umbraco.Web.Cache.PublicAccessCacheRefresher, Umbraco.Web, Version=8.0.0.0, Cult
 Umbraco.Web.Cache.TemplateCacheRefresher, Umbraco.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null
 Umbraco.Web.Cache.UserCacheRefresher, Umbraco.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null
 HighlyDeveloped.Core.RegisterServicesComposer, HighlyDeveloped.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+HighlyDeveloped.Core.Controllers.AccountController, HighlyDeveloped.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 HighlyDeveloped.Core.Controllers.ContactController, HighlyDeveloped.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 HighlyDeveloped.Core.Controllers.LoginController, HighlyDeveloped.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 HighlyDeveloped.Core.Controllers.RegisterController, HighlyDeveloped.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -387,6 +388,7 @@ Umbraco.Web.Controllers.UmbProfileController, Umbraco.Web, Version=8.0.0.0, Cult
 Umbraco.Web.Controllers.UmbLoginStatusController, Umbraco.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null
 Umbraco.Web.Controllers.UmbRegisterController, Umbraco.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null
 Umbraco.Web.Controllers.UmbLoginController, Umbraco.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null
+HighlyDeveloped.Core.Controllers.AccountController, HighlyDeveloped.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 HighlyDeveloped.Core.Controllers.ContactController, HighlyDeveloped.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 HighlyDeveloped.Core.Controllers.LoginController, HighlyDeveloped.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 HighlyDeveloped.Core.Controllers.RegisterController, HighlyDeveloped.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -478,6 +480,7 @@ Umbraco.Web.Controllers.UmbProfileController, Umbraco.Web, Version=8.0.0.0, Cult
 Umbraco.Web.Controllers.UmbLoginStatusController, Umbraco.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null
 Umbraco.Web.Controllers.UmbRegisterController, Umbraco.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null
 Umbraco.Web.Controllers.UmbLoginController, Umbraco.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null
+HighlyDeveloped.Core.Controllers.AccountController, HighlyDeveloped.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 HighlyDeveloped.Core.Controllers.ContactController, HighlyDeveloped.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 HighlyDeveloped.Core.Controllers.LoginController, HighlyDeveloped.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 HighlyDeveloped.Core.Controllers.RegisterController, HighlyDeveloped.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
