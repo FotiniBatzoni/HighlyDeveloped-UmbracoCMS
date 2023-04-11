@@ -39,7 +39,7 @@ namespace HighlyDeveloped.Core.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult HandelUpdateDetails (AccountViewModel vm)
+        public ActionResult HandelUpdateDetails(AccountViewModel vm)
         {
             //Is the model valid
             if(!ModelState.IsValid)
