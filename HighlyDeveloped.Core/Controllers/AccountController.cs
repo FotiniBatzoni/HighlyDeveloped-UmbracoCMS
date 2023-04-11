@@ -69,7 +69,7 @@ namespace HighlyDeveloped.Core.Controllers
             Services.MemberService.Save (member);
 
             //Thanks
-            TempData["status"] = "OK";
+            TempData["status"] = "Updated Details";
 
             return RedirectToCurrentUmbracoPage();
         }

@@ -9,12 +9,22 @@
         <div class="col">
             <h2>My Account</h2>
             <!--If this is postback - success show message-->
-            @if (TempData["status"] != null && (string)TempData["status"] == "OK")
+            @if (TempData["status"] != null)
             {
-                <p>Your details have been updated</p>
+                if ((string)TempData["status"] == "Updated Details")
+                {
+                    <p>Your details have been updated</p>
+                }
+                else
+                {
+                    <p>Thanks for changing the password</p>
+                }
+
             }
             else
             {
+                @Html.ValidationSummary()
+
                 <!--Otherwise show the form-->
                 using (Html.BeginUmbracoForm<AccountController>("HandelUpdateDetails"))
                 {
@@ -34,6 +44,28 @@
                     </div>
 
                     <button type="submit" value="Update Details" name="update-button">Update</button>
+                }
+
+
+
+                <!--Password Changed Form-->
+                using (Html.BeginUmbracoForm<AccountController>("HandlePasswordChange"))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password)
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @type = "password", @autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ConfirmPassword)
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @type = "password", @autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                    </div>
+
+                    <button type="submit" value="Change Password Details" name="password-button">Change password</button>
                 }
             }
         </div>
