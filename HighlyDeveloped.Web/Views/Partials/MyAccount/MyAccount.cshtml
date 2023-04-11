@@ -52,6 +52,9 @@
                 using (Html.BeginUmbracoForm<AccountController>("HandlePasswordChange"))
                 {
                     @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.Name)
+                    @Html.HiddenFor(m => m.Email)
+                    @Html.HiddenFor(m => m.Username)
 
                     <div class="form-group">
                         @Html.LabelFor(m => m.Password)
