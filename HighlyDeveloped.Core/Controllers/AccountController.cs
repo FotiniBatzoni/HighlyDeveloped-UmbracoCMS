@@ -1,4 +1,5 @@
 ﻿using HighlyDeveloped.Core.ViewModel;
+using System.ComponentModel;
 using System.Web.Mvc;
 using System.Web.Security;
 using Umbraco.Web.Mvc;
@@ -34,6 +35,43 @@ namespace HighlyDeveloped.Core.Controllers
 
 
             return PartialView(PARTIAL_VIEW_FOLDER + "MyAccount.cshtml", vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult HandelUpdateDetails (AccountViewModel vm)
+        {
+            //Is the model valid
+            if(!ModelState.IsValid)
+            {
+                ModelState.AddModelError("Error", "There has been a problem");
+                return CurrentUmbracoPage();
+            }
+
+            //Is there a member
+            if(!Umbraco.MemberIsLoggedOn() || Membership.GetUser() == null)
+            {
+                ModelState.AddModelError("Error", "You are not logged on");
+                return CurrentUmbracoPage();
+            }
+
+            var member = Services.MemberService.GetByUsername (Membership.GetUser().UserName);
+            if(member == null)
+            {
+                ModelState.AddModelError("Error", "You are not logged on");
+                return CurrentUmbracoPage();
+            }
+
+            //Update the member's details
+            member.Name = vm.Name;
+            member.Email = vm.Email;
+
+            Services.MemberService.Save (member);
+
+            //Thanks
+            TempData["status"] = "OK";
+
+            return RedirectToCurrentUmbracoPage();
         }
     }
 }
